@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGray"
+    android:orientation="vertical"
+    tools:context="com.noubo.oldmancare.olamancaremanager.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="31"
+        android:paddingLeft="35dp"
+        android:paddingStart="35dp"
+        android:paddingRight="35dp"
+        android:paddingEnd="35dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="90"
+                android:padding="25dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/white_card">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.5"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/fontGray"
+                    android:textSize="30sp"
+                    android:typeface="sans"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/user_login"/>
+
+                <TextView
+                    android:id="@+id/login_error_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/temp"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/holo_red_light"/>
+
+                <EditText
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="9dp"
+                    android:maxLines="1"
+                    android:textColor="@color/fontGray"
+                    android:hint="@string/user_name"
+                    android:textColorHint="@color/lightGray"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:maxLength="20"
+                    android:background="@drawable/gray_card"/>
+
+                <TextView
+                    android:id="@+id/password_error_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/empty_password"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/holo_red_light"/>
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="9dp"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="@color/fontGray"
+                    android:hint="@string/password"
+                    android:textColorHint="@color/lightGray"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp"
+                    android:maxLength="20"
+                    android:background="@drawable/gray_card"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/temp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/login_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="13dp"
+                    android:gravity="center"
+                    android:text="@string/login"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/red_btn"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@android:color/transparent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:typeface="sans"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/register"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:typeface="sans"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/forget_password"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_icon_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="100"
+            android:layout_centerInParent="true">
+
+            <com.noubo.oldmancare.widget.SquareLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/green_circle">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/user_logo"/>
+
+            </com.noubo.oldmancare.widget.SquareLinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+
+</LinearLayout>

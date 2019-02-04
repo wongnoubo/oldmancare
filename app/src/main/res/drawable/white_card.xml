@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 白色圆角矩形 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item  android:left="1.2dp">
+        <shape android:shape="rectangle"
+            android:dither="true">
+            <corners android:radius="4dp"/>
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
+
+    <item android:bottom="1.6dp">
+        <shape android:shape="rectangle"
+            android:dither="true">
+            <corners android:radius="4.1dp" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,4 +1,4 @@
-package com.noubo.oldmancare;
+package com.noubo.oldmancare.olamancaremanager;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.annotation.TargetApi;
 import android.view.Window;
 import android.view.WindowManager;
 import android.content.Intent;
+
+import com.noubo.oldmancare.R;
 
 
 public class WelcomeActivity extends AppCompatActivity {

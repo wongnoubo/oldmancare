@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 未按下为淡红色 -->
+    <item android:state_pressed="false"><shape android:shape="rectangle"
+        android:dither="true">
+        <corners android:radius="4dp"/>
+        <solid android:color="@color/red" />
+    </shape></item>
+    <!-- 按下为深红色 -->
+    <item android:state_pressed="true"><shape android:shape="rectangle"
+        android:dither="true">
+        <corners android:radius="4dp"/>
+        <solid android:color="@color/darkRed" />
+    </shape></item>
+
+</selector>
