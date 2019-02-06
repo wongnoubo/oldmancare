@@ -46,6 +46,14 @@ public class MyApplication extends Application{
         return mContext;
     }
 
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static void setUserName(String name) {
+        userName = name;
+    }
+
     public void setLat(double lat){this.lat = lat;}
     public void setLon(double lon){this.lon = lon;}
     public double getLat(){return lat;}
