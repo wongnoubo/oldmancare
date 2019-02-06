@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 淡出效果 -->
+<!--duration动画持续时间;fromAlpha开始时透明度;toAlpha结束时透明度-->
+<!--alpha标签是渐变透明度动画效果-->
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:duration="300"
+    android:fromAlpha="1"
+    android:toAlpha="0" >
+</alpha>
