@@ -25,9 +25,8 @@ import com.noubo.oldmancare.R;
 import com.noubo.oldmancare.util.MyApplication;
 public class WelcomeActivity extends AppCompatActivity {
 
-    private Handler mHandler;
     private static final int TIMES_UP = 0;
-
+    private Handler mHandler;
     private String FILE = "userNamePwd";
 
     private boolean autoLogin = false;
@@ -96,6 +95,7 @@ public class WelcomeActivity extends AppCompatActivity {
             final String userName = preferences.getString("userName", null);
             String password = preferences.getString("password", null);
             OkHttpClient mOkHttpClient = new OkHttpClient();
+            //okhttp库通过post发送数据
             RequestBody requestBody = new FormBody.Builder()
                     .add("name", userName)
                     .add("password", password)
@@ -104,15 +104,16 @@ public class WelcomeActivity extends AppCompatActivity {
                     .url(getResources().getString(R.string.server_url) + "/account/verify/")
                     .post(requestBody)
                     .build();
-
+            //异步获取信息，该方法接受一个CallBack对象，作为异步操作的回调
             Call call = mOkHttpClient.newCall(request);
             call.enqueue(new Callback()
             {
+                //失败后的操作
                 @Override
                 public void onFailure(Call call, IOException e) {
                     loginSuccess = false;
                 }
-
+                //成功后的操作
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String result = response.body().string();
