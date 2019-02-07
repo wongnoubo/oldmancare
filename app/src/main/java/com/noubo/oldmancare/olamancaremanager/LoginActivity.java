@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -49,9 +50,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("LoginActivity", getClass().getSimpleName());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         getWindow().setBackgroundDrawable(null);// 减少重绘
+        getSupportActionBar().hide();//隐藏标题栏
+        //活动被回收之后数据处理
+        if(savedInstanceState!=null){
+            userName = savedInstanceState.getString("tempUserName");
+            password = savedInstanceState.getString("tempPassWord");
+            Log.d("LoginActivity",userName);
+            Log.d("LoginActivity",password);
+        }
 
         loginErrorText = (TextView)findViewById(R.id.login_error_text);
         passwordErrorText = (TextView)findViewById(R.id.password_error_text);
@@ -119,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                 else return null;
             }
         }});
-
+        //获取组件并为之设置监听器
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +204,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //预防活动被回收了，数据保存问题
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("tempUserName",userName);
+        outState.putString("tempPassWord",password);
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {//对手机按键自定义操作
         if (keyCode == KeyEvent.KEYCODE_BACK
