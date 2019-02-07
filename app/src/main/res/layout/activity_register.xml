@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bgGray"
     android:orientation="vertical"
-    tools:context="com.noubo.oldmancare.olamancaremanager.LoginActivity">
+    tools:context="com.noubo.oldmancare.olamancaremanager.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,13 +57,13 @@
                     android:layout_weight="2"
                     android:background="@android:color/transparent"
                     android:gravity="center"
-                    android:text="@string/user_login"
+                    android:text="@string/user_register"
                     android:textColor="@color/fontGray"
                     android:textSize="30sp"
                     android:typeface="sans"/>
 
                 <TextView
-                    android:id="@+id/login_error_text"
+                    android:id="@+id/register_login_error_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -72,7 +72,7 @@
                     android:textSize="14sp"/>
 
                 <EditText
-                    android:id="@+id/user_name"
+                    android:id="@+id/register_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginBottom="9dp"
@@ -89,7 +89,7 @@
                     android:textSize="20sp"/>
 
                 <TextView
-                    android:id="@+id/password_error_text"
+                    android:id="@+id/register_password_error_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -98,7 +98,7 @@
                     android:textSize="14sp"/>
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/register_password"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginBottom="9dp"
@@ -126,7 +126,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/login_btn"
+                    android:id="@+id/register_login_btn"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginBottom="13dp"
@@ -134,7 +134,7 @@
                     android:layout_weight="2"
                     android:background="@drawable/red_btn"
                     android:gravity="center"
-                    android:text="@string/login"
+                    android:text="@string/clicktoregister"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"/>
 
@@ -147,7 +147,7 @@
                     android:background="@android:color/transparent">
 
                     <TextView
-                        android:id="@+id/register"
+                        android:id="@+id/old_user"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -156,22 +156,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
                         android:gravity="center"
-                        android:text="@string/register"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
-                        android:typeface="sans"/>
-
-                    <TextView
-                        android:id="@+id/forget_password"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@android:color/transparent"
-                        android:gravity="center"
-                        android:text="@string/forget_password"
+                        android:text="@string/old_user"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
                         android:typeface="sans"/>
@@ -186,7 +171,9 @@
             android:id="@+id/user_icon_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:orientation="vertical"
             android:weightSum="100">
 

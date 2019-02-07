@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final int UNKNOWN_ERROR = 3;
     private TextView loginErrorText;
     private TextView passwordErrorText;
+    private TextView registerText;
+    private TextView forgetPassword;
     private EditText userNameText;
     private EditText passwordText;
     private View loginButton;
@@ -67,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordErrorText = (TextView)findViewById(R.id.password_error_text);
         userNameText = (EditText)findViewById(R.id.user_name);
         passwordText = (EditText)findViewById(R.id.password);
+        registerText = (TextView)findViewById(R.id.register);
+        forgetPassword = (TextView)findViewById(R.id.forget_password);
         loginButton = findViewById(R.id.login_btn);
 
         loginErrorText.setVisibility(View.INVISIBLE);
@@ -138,6 +143,25 @@ public class LoginActivity extends AppCompatActivity {
                 loginErrorText.setVisibility(View.INVISIBLE);
                 passwordErrorText.setVisibility(View.INVISIBLE);
                 checkPassword();
+            }
+        });
+
+        //注册事件监听器
+        registerText.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent registerIntent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(registerIntent);
+                Log.d(TAG,"点击注册事件");
+            }
+        });
+        //忘记密码事件监听器
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent forgetPasswordIntent = new Intent(LoginActivity.this,ForgetpasswordActivity.class);
+                startActivity(forgetPasswordIntent);
+                Log.d(TAG,"忘记密码");
             }
         });
     }

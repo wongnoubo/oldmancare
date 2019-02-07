@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">oldmancare</string>
     <string name="user_login">用户登录</string>
+    <string name="user_register">用户注册</string>
     <string name="user_name">用户名</string>
     <string name="password">密码</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
+    <string name="clicktoregister">点击注册</string>
+    <string name="old_user">已有账户？</string>
     <string name="forget_password">忘记密码？</string>
     <string name="change_password">修改密码</string>
     <string name="logout">安全退出</string>
