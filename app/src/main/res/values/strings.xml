@@ -9,6 +9,7 @@
     <string name="clicktoregister">点击注册</string>
     <string name="old_user">已有账户？</string>
     <string name="forget_password">忘记密码？</string>
+    <string name="find_password">找回密码</string>
     <string name="change_password">修改密码</string>
     <string name="logout">安全退出</string>
     <string name="animal_id">宠物ID</string>
