@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--不可点击-->
+    <item android:state_enabled="false">
+        <shape>
+            <solid android:color="@color/registerGray"/>
+            <corners android:radius="15dp"/>
+        </shape>
+    </item>
+    <!--可以点击时-->
+    <item android:state_enabled="true">
+        <shape>
+            <solid android:color="@color/red"/>
+            <corners android:radius="15dp"/>
+        </shape>
+    </item>
+</selector>

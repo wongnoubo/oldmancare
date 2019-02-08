@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="bgGray">#e5e5e5</color>
     <color name="fontGray">#666666</color>
+    <color name="registerGray">#7b7b7b</color>
     <color name="lightGray">#aaaaaa</color>
     <color name="red">#ea6060</color>
     <color name="darkRed">#df4343</color>

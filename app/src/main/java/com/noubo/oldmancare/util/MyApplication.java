@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
+
+import com.mob.MobSDK;
 import com.noubo.oldmancare.R;
 import com.noubo.oldmancare.util.db.MySqliteHelper;
 
@@ -47,8 +49,11 @@ public class MyApplication extends Application{
         super.onCreate();
         mContext = getApplicationContext();
         LayoutInflater inflate = LayoutInflater.from(mContext);
+        //创建或者升级数据库
         mySqliteHelper = new MySqliteHelper(this,"Admin.db",null,1);
         mySqliteHelper.getWritableDatabase();
+        //短信接口 初始化MobSDK。
+        MobSDK.init(this);
        /* View view = inflate.inflate(R.layout.medical_item,null);
 
         int w = View.MeasureSpec.makeMeasureSpec(0,
