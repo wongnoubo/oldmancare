@@ -12,10 +12,8 @@
     <string name="find_password">找回密码</string>
     <string name="change_password">修改密码</string>
     <string name="logout">安全退出</string>
-    <string name="animal_id">宠物ID</string>
-    <string name="animal_info">宠物信息</string>
     <string name="master_info">主人信息</string>
-    <string name="animal_type">宠物种类：</string>
+    <string name="unsupportbluetooth">设备不支持蓝牙</string>
     <string name="gender">性别：</string>
     <string name="age">年龄：</string>
     <string name="health">健康情况：</string>
