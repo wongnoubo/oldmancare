@@ -2,6 +2,7 @@ package com.noubo.oldmancare.olamancaremanager;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Handler;
@@ -16,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -26,6 +26,9 @@ import com.noubo.oldmancare.util.db.MySqliteHelper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+import com.noubo.oldmancare.util.PhoneFormatCheckUtils;
 
 public class RegisterActivity extends AppCompatActivity {
     public static final String TAG = "RegisterActivity";
@@ -59,8 +62,23 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterButton.setClickable(false);
             } else {
                 //这里是文本框有字符了的情况
-                RegisterButton.setEnabled(true);
-                RegisterButton.setClickable(true);
+                 //注册用户校验
+                 if(checkUser(userNameText.getText().toString())){
+                     registerErrorText.setText(R.string.used_username);
+                     registerErrorText.setVisibility(View.VISIBLE);
+                     Log.d(TAG,"该用户名已经被注册");
+                 }else{
+                     if(!PhoneFormatCheckUtils.isPhoneLegal(userNameText.getText().toString())){
+                         registerErrorText.setText(R.string.standardtel);
+                         registerErrorText.setVisibility(View.VISIBLE);
+                         Log.d(TAG,"手机号码不正确");
+                     }else{
+                         registerErrorText.setVisibility(View.INVISIBLE);
+                         RegisterButton.setEnabled(true);
+                         RegisterButton.setClickable(true);
+                     }
+                 }
+
             }
         }
 
@@ -119,6 +137,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -134,6 +154,29 @@ public class RegisterActivity extends AppCompatActivity {
         Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
         Matcher matcher = p.matcher(tel);
         return matcher.matches();
+    }
+
+
+    /**
+     * 检查用户手机号是否注册
+     * @param tel
+     */
+    public boolean checkUser(String tel){
+        SQLiteDatabase db = mySqliteHelper.getWritableDatabase();
+        //查询手机号是否已经被注册
+        Cursor cursor = db.query("Admin",null,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            if(cursor.getString(cursor.getColumnIndex("username")).equals(tel)){
+                Log.d(TAG,"该用户已经被注册");
+                return true;
+            }
+            else{
+                Log.d(TAG,"该用户尚未被注册");
+                return false;
+            }
+        }while (cursor.moveToNext());
+        cursor.close();
+        return false;
     }
 
     /**
