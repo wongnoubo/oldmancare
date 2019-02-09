@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class PhoneFormatCheckUtilsTest {
     @Test
     public void testisPhoneLegal(){
-        if(!PhoneFormatCheckUtils.isPhoneLegal("131123311503"))
+        if(!PhoneFormatCheckUtils.isPhoneLegal("1311311503"))
             System.out.println("hh");
         else
             System.out.println("bb");

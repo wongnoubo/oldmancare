@@ -8,7 +8,8 @@ import android.view.View;
 
 import com.mob.MobSDK;
 import com.noubo.oldmancare.R;
-import com.noubo.oldmancare.util.db.MySqliteHelper;
+
+import org.litepal.LitePal;
 
 /**
  * Created by admin on 2019/2/4.
@@ -29,7 +30,6 @@ public class MyApplication extends Application{
     //经纬度
     private double lat;
     private double lon;
-    private MySqliteHelper mySqliteHelper;
 
     public static Context getGlobalContext(){
         return mContext;
@@ -50,10 +50,9 @@ public class MyApplication extends Application{
         mContext = getApplicationContext();
         LayoutInflater inflate = LayoutInflater.from(mContext);
         //创建或者升级数据库
-        mySqliteHelper = new MySqliteHelper(this,"Admin.db",null,1);
-        mySqliteHelper.getWritableDatabase();
         //短信接口 初始化MobSDK。
         MobSDK.init(this);
+        LitePal.initialize(this);
        /* View view = inflate.inflate(R.layout.medical_item,null);
 
         int w = View.MeasureSpec.makeMeasureSpec(0,

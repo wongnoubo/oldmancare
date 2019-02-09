@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginErrorText.setVisibility(View.INVISIBLE);
         passwordErrorText.setVisibility(View.INVISIBLE);
-
+        //使用线程访问服务器，获取信息后返回通知主线程更新UI
         mHandler =  new Handler(){
             public void handleMessage(Message msg) {
                 switch (msg.what) {

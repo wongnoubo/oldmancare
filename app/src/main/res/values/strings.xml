@@ -102,6 +102,7 @@
     <string name="unknown_error">未知错误！</string>
     <string name="empty_username">用户名不能为空！</string>
     <string name="used_username">用户名已经被注册</string>
+    <string name="notgegistername">该用户尚未注册</string>
     <string name="standardtel">请输入正确的电话号码</string>
     <string name="empty_password">密码不能为空！</string>
     <string name="welcome_text">欢迎使用宠物管家</string>

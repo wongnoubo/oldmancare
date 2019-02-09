@@ -16,17 +16,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.noubo.oldmancare.R;
-import com.noubo.oldmancare.util.db.MySqliteHelper;
 
+import com.noubo.oldmancare.R;
+import com.noubo.oldmancare.model.Admin;
+
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import org.litepal.LitePal;
+import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
 
 import com.noubo.oldmancare.util.PhoneFormatCheckUtils;
 
@@ -42,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String userName = null;
     private String password = null;
 
-    private MySqliteHelper mySqliteHelper;
+   // private MySqliteHelper mySqliteHelper;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -55,19 +62,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-           // if (userNameText.getText().toString().isEmpty() || passwordText.getText().toString().isEmpty()) {
              if(TextUtils.isEmpty(userNameText.getText())||TextUtils.isEmpty(passwordText.getText())){
                 //这里是文本框空的情况
                 RegisterButton.setEnabled(false);
                 RegisterButton.setClickable(false);
             } else {
-                //这里是文本框有字符了的情况
-                 //注册用户校验
-                 if(checkUser(userNameText.getText().toString())){
-                     registerErrorText.setText(R.string.used_username);
-                     registerErrorText.setVisibility(View.VISIBLE);
-                     Log.d(TAG,"该用户名已经被注册");
-                 }else{
+                 List<Admin> admins = DataSupport.where("username = ?",userNameText.getText().toString()).find(Admin.class);
+                 if(admins.toString().equals("[]")) {
+                     Log.d(TAG,"该用户名未被注册");
                      if(!PhoneFormatCheckUtils.isPhoneLegal(userNameText.getText().toString())){
                          registerErrorText.setText(R.string.standardtel);
                          registerErrorText.setVisibility(View.VISIBLE);
@@ -77,8 +79,11 @@ public class RegisterActivity extends AppCompatActivity {
                          RegisterButton.setEnabled(true);
                          RegisterButton.setClickable(true);
                      }
+                 }else{
+                     registerErrorText.setText(R.string.used_username);
+                     registerErrorText.setVisibility(View.VISIBLE);
+                     Log.d(TAG,"该用户名已经被注册");
                  }
-
             }
         }
 
@@ -108,7 +113,9 @@ public class RegisterActivity extends AppCompatActivity {
         passwordErrorText.setVisibility(View.INVISIBLE);
         userNameText.addTextChangedListener(TextEvent);
         passwordText.addTextChangedListener(TextEvent);
-        mySqliteHelper = new MySqliteHelper(this, "Admin.db", null, 1);
+        //mySqliteHelper = new MySqliteHelper(this, "Admin.db", null, 1);
+        //创建数据库
+        Connector.getDatabase();
 
         //已有账户监听器，点击跳转
         olduserText.setOnClickListener(new View.OnClickListener() {
@@ -125,12 +132,23 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //往数据库中插入数据
-                SQLiteDatabase db = mySqliteHelper.getWritableDatabase();
+                Admin admin = new Admin();
+                admin.setUsername(userNameText.getText().toString());
+                Log.d(TAG,"插入用户名");
+                admin.setPassword(passwordText.getText().toString());
+                Log.d(TAG,"插入密码");
+                //第一种 不推荐
+              /*  SQLiteDatabase db = mySqliteHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put("username", userNameText.getText().toString());
                 values.put("password", passwordText.getText().toString());
-                db.insert("Admin", null, values);
+                db.insert("Admin", null, values);*/
                 Log.d(TAG, "点击注册");
+                if (admin.save()) {
+                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_SHORT).show();
+                }
                 //点击注册后自动跳转登录活动
                 Intent registerToLogin = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(registerToLogin);
@@ -154,29 +172,6 @@ public class RegisterActivity extends AppCompatActivity {
         Pattern p = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
         Matcher matcher = p.matcher(tel);
         return matcher.matches();
-    }
-
-
-    /**
-     * 检查用户手机号是否注册
-     * @param tel
-     */
-    public boolean checkUser(String tel){
-        SQLiteDatabase db = mySqliteHelper.getWritableDatabase();
-        //查询手机号是否已经被注册
-        Cursor cursor = db.query("Admin",null,null,null,null,null,null);
-        if(cursor.moveToFirst()){
-            if(cursor.getString(cursor.getColumnIndex("username")).equals(tel)){
-                Log.d(TAG,"该用户已经被注册");
-                return true;
-            }
-            else{
-                Log.d(TAG,"该用户尚未被注册");
-                return false;
-            }
-        }while (cursor.moveToNext());
-        cursor.close();
-        return false;
     }
 
     /**
