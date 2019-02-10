@@ -49,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
     private String userName = null;
     private String password = null;
 
-   // private MySqliteHelper mySqliteHelper;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.

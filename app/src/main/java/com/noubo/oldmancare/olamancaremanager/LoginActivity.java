@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,9 +21,14 @@ import android.widget.TextView;
 import android.support.design.widget.Snackbar;
 
 import com.noubo.oldmancare.R;
+import com.noubo.oldmancare.model.Admin;
 import com.noubo.oldmancare.util.MyApplication;
+import com.noubo.oldmancare.util.PhoneFormatCheckUtils;
+
+import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,6 +58,46 @@ public class LoginActivity extends AppCompatActivity {
 
     private String FILE = "userNamePwd";
 
+    private TextWatcher TextEvent = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if(TextUtils.isEmpty(userNameText.getText())||TextUtils.isEmpty(passwordText.getText())){
+                //这里是文本框空的情况
+                loginButton.setEnabled(false);
+                loginButton.setClickable(false);
+            } else {
+                List<Admin> admins = DataSupport.where("username = ?",userNameText.getText().toString()).find(Admin.class);
+                if(admins.toString().equals("[]")) {
+                    Log.d(TAG,"该用户名未被注册");
+                    if(!PhoneFormatCheckUtils.isPhoneLegal(userNameText.getText().toString())){
+                        loginErrorText.setText(R.string.standardtel);
+                        loginErrorText.setVisibility(View.VISIBLE);
+                        loginButton.setClickable(false);
+                        loginButton.setEnabled(false);
+                        Log.d(TAG,"手机号码不正确");
+                    }else{
+                        loginErrorText.setVisibility(View.VISIBLE);
+                        loginErrorText.setText(R.string.plzregister);
+                        Log.d(TAG,"该账号未注册，请注册");
+                    }
+                }else{
+                    loginErrorText.setVisibility(View.INVISIBLE);
+                    loginButton.setClickable(true);
+                    loginButton.setEnabled(true);
+                    Log.d(TAG,"该用户名已经注册");
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getWindow().setBackgroundDrawable(null);// 减少重绘
         getSupportActionBar().hide();//隐藏标题栏
+
+
         //活动被回收之后数据处理
         if(savedInstanceState!=null){
             userName = savedInstanceState.getString("tempUserName");
@@ -76,8 +126,12 @@ public class LoginActivity extends AppCompatActivity {
 
         loginErrorText.setVisibility(View.INVISIBLE);
         passwordErrorText.setVisibility(View.INVISIBLE);
+        userNameText.addTextChangedListener(TextEvent);
+        passwordText.addTextChangedListener(TextEvent);
+        loginButton.setEnabled(false);
+        loginButton.setClickable(false);
         //使用线程访问服务器，获取信息后返回通知主线程更新UI
-        mHandler =  new Handler(){
+        /*mHandler =  new Handler(){
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case LOGIN_SUCCESS:
@@ -119,21 +173,21 @@ public class LoginActivity extends AppCompatActivity {
                         break;
                 }
             }
-        };
+        };*/
 
-        boolean loginFailed = getIntent().getBooleanExtra("loginFailed", false);
+        /*boolean loginFailed = getIntent().getBooleanExtra("loginFailed", false);
         if(loginFailed){
             Snackbar.make(loginButton, getResources().getString(R.string.account_change),
                     Snackbar.LENGTH_SHORT).show();//snackbar短时间显示
-        }
+        }*/
 
-        userNameText.setFilters(new InputFilter[]{new InputFilter() {
+        /*userNameText.setFilters(new InputFilter[]{new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 if(source.equals(" ")||source.equals("\t")||source.toString().contentEquals("\n"))return "";
                 else return null;
             }
-        }});
+        }});*/
         //获取组件并为之设置监听器
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +196,15 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.setClickable(false);
                 loginErrorText.setVisibility(View.INVISIBLE);
                 passwordErrorText.setVisibility(View.INVISIBLE);
-                checkPassword();
+                if(checkPassword()){
+                    Log.d(TAG,"账号密码正确");
+                    Intent loginIntent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(loginIntent);
+                }else {
+                    Log.d(TAG,"账号密码错误");
+                    passwordErrorText.setText(R.string.password_old_error);
+                    passwordErrorText.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -166,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void checkPassword(){
+    /*private void checkPassword(){
         userName = userNameText.getText().toString();
         password = passwordText.getText().toString();
 
@@ -226,8 +288,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
+    private boolean checkPassword(){
+        List<Admin> admins = DataSupport.where("username = ?",userNameText.getText().toString()).find(Admin.class);
+        if(admins.get(0).getPassword().equals(passwordText.getText().toString())){
+            return true;
+        }else
+            return false;
+    }
     //预防活动被回收了，数据保存问题
     @Override
     protected void onSaveInstanceState(Bundle outState){
