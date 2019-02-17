@@ -112,7 +112,10 @@
     <string name="password_match_error">两次输入密码不一致！</string>
     <string name="password_new_empty">请输入新密码！</string>
     <string name="password_confirm_empty">请再次输入新密码！</string>
-    <string name="id_empty">宠物ID号不能为空</string>
+    <string name="tab_homepage">首页</string>
+    <string name="tab_location">位置</string>
+    <string name="tab_my">我的</string>
+    <string name="tab_sport">步数</string>
     <string name="animal_error">查询信息失败</string>
     <string name="master_error">查询信息失败</string>
     <string name="animal_empty">查询不到信息</string>
