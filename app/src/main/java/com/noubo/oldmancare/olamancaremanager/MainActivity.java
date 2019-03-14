@@ -100,10 +100,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnStepNumber= (ImageButton) findViewById(R.id.tab_step_img);
         btnMine = (ImageButton) findViewById(R.id.tab_mine_img);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View tabHomepage = inflater.inflate(R.layout.homepage,null);
-        View tabAddress = inflater.inflate(R.layout.address,null);
-        View tabStepnumber = inflater.inflate(R.layout.stepnumber,null);
-        View tabMine = inflater.inflate(R.layout.mine,null);
+        View tabHomepage = inflater.inflate(R.layout.fragment_shouye,null);
+        View tabAddress = inflater.inflate(R.layout.fragment_address,null);
+        View tabStepnumber = inflater.inflate(R.layout.fragment_sport,null);
+        View tabMine = inflater.inflate(R.layout.fragment_mine,null);
         mViews.add(tabHomepage);
         mViews.add(tabAddress);
         mViews.add(tabStepnumber);

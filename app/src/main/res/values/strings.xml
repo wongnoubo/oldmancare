@@ -124,4 +124,7 @@
     <string name="server_url">http://39.108.105.133:8888</string>
     <string name="account_change">账号已失效，请重新登录</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
