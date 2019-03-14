@@ -18,7 +18,6 @@ import java.util.List;
 import com.noubo.oldmancare.R;
 
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG="MainActivity";
@@ -101,14 +100,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnStepNumber= (ImageButton) findViewById(R.id.tab_step_img);
         btnMine = (ImageButton) findViewById(R.id.tab_mine_img);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View tab01 = inflater.inflate(R.layout.tab01,null);
-        View tab02 = inflater.inflate(R.layout.tab02,null);
-        View tab03 = inflater.inflate(R.layout.tab03,null);
-        View tab04 = inflater.inflate(R.layout.tab04,null);
-        mViews.add(tab01);
-        mViews.add(tab02);
-        mViews.add(tab03);
-        mViews.add(tab04);
+        View tabHomepage = inflater.inflate(R.layout.homepage,null);
+        View tabAddress = inflater.inflate(R.layout.address,null);
+        View tabStepnumber = inflater.inflate(R.layout.stepnumber,null);
+        View tabMine = inflater.inflate(R.layout.mine,null);
+        mViews.add(tabHomepage);
+        mViews.add(tabAddress);
+        mViews.add(tabStepnumber);
+        mViews.add(tabMine);
         mPagerAdapter = new PagerAdapter(){
 
             @Override
