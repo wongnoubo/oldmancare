@@ -2,11 +2,13 @@ package com.noubo.oldmancare.olamancaremanager;
 
 import android.content.Context;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.util.Log;
 
 import com.noubo.oldmancare.R;
 
@@ -19,6 +21,7 @@ import com.noubo.oldmancare.R;
  * create an instance of this fragment.
  */
 public class ShouyeFragment extends Fragment {
+    public static final String TAG = "ShouyeFragment";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,16 +58,25 @@ public class ShouyeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"onCreate");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
+    /**
+     * 为fragment加载布局
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(TAG,"onCreateView");
         return inflater.inflate(R.layout.fragment_shouye, container, false);
     }
 
@@ -74,10 +86,13 @@ public class ShouyeFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
+    /**
+     * 碎片与活动建立关联的时候调用
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d(TAG,"onAttach");
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -86,9 +101,13 @@ public class ShouyeFragment extends Fragment {
         }
     }
 
+    /**
+     * 碎片与活动解除关联的时候调用
+     */
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.d(TAG,"onDetach");
         mListener = null;
     }
 
