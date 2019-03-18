@@ -1,5 +1,8 @@
 package com.noubo.oldmancare.olamancaremanager;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.PagerAdapter;
@@ -8,7 +11,7 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.net.Uri;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +22,8 @@ import com.noubo.oldmancare.R;
 
 import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,AddressFragment.OnFragmentInteractionListener {
     private static final String TAG="MainActivity";
     private ViewPager viewPager;
     private LinearLayout mTabHomePage;
@@ -29,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton btnHomePage,btnAddress,btnStepNumber,btnMine;
     private PagerAdapter mPagerAdapter;
     private List<View> mViews = new ArrayList<View>();
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case 1:
                         btnAddress.setImageResource(R.drawable.faxian_press);
+                        replaceAddressFragment(new AddressFragment());
                         Log.d(TAG,"滑动地址");
                         break;
                     case 2:
@@ -159,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tab_address:
                 viewPager.setCurrentItem(1);
                 btnAddress.setImageResource(R.drawable.faxian_press);
+                replaceAddressFragment(new AddressFragment());
                 Log.d(TAG,"点击地址");
                 break;
             case R.id.tab_mine:
@@ -174,5 +185,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    private void replaceAddressFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.address_layout,fragment);
+        transaction.commit();
     }
 }

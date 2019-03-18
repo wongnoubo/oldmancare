@@ -3,12 +3,23 @@ package com.noubo.oldmancare.olamancaremanager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import android.util.Log;
 import com.noubo.oldmancare.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,10 +30,19 @@ import com.noubo.oldmancare.R;
  * create an instance of this fragment.
  */
 public class AddressFragment extends Fragment {
+    private static final String TAG="AddressFragment";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    //onenetapiKey DeviceID
+    private static final String DeviceID = "518991790";
+    private static final String ApiKey = "Es6uSmz5efNHODQUP=YLpm6WYos=";
+
+    //c从Onenet接收到的信息
+    private String receivedInfo;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -49,23 +69,62 @@ public class AddressFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        Log.d(TAG,"AddressFragment");
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final TextView Text_InfoReceived = (TextView) getActivity().findViewById(R.id.Text_InfoReceived);
+        Button Button_GetInfo = (Button) getActivity().findViewById(R.id.Button_GetInfo);
+        Text_InfoReceived.setText("");
+        //获取数据线程
+        final Runnable getRunable = new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                receivedInfo = null;
+                receivedInfo = getInfo("location");
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Text_InfoReceived.append(receivedInfo + "\n\n" );
+                        Log.d(TAG,"获取数据点击事件");
+                    }
+                });
+                Looper.loop();
+            }
+        };
+
+        //获取数据
+        Button_GetInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread(getRunable).start();
+            }
+        });
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.d(TAG,"onCreateView");
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_address, container, false);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"onCreate");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_address, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -78,6 +137,7 @@ public class AddressFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d(TAG,"onAttach");
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -89,6 +149,7 @@ public class AddressFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.d(TAG,"onDetach");
         mListener = null;
     }
 
@@ -105,5 +166,40 @@ public class AddressFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    //从云服务器获取数据
+    public String getInfo(String dataStream){
+//        Toast.makeText(MainActivity.this, "开始从云服务器获取数据", Toast.LENGTH_SHORT).show();    //提示
+        String response = null;
+        try{
+            URL url = new URL("http://api.heclouds.com/devices/" + DeviceID + "/datastreams/" + dataStream);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setConnectTimeout(15*1000);
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("api-key",ApiKey);
+            if (connection.getResponseCode() == 200){   //返回码是200，网络正常
+                InputStream inputStream = connection.getInputStream();
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                int len = 0;
+                byte buffer[] = new byte[1024];
+                while((len = inputStream.read(buffer))!=-1){
+                    os.write(buffer,0,len);
+                }
+                inputStream.close();
+                os.close();
+                response = os.toString();
+            }else{
+                //返回码不是200，网络异常
+                Toast.makeText(getActivity().getApplicationContext(), "网络异常", Toast.LENGTH_SHORT).show();
+            }
+
+        }catch (IOException e){
+            Toast.makeText(getActivity().getApplicationContext(), "获取数据失败", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+        return response;
+
     }
 }

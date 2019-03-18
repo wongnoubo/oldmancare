@@ -5,12 +5,37 @@
     android:orientation="vertical"
     tools:context=".olamancaremanager.AddressFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="address_fragment"
-        android:gravity="center"
-        android:textSize="40sp"/>
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbarStyle="outsideOverlay">
+
+            <TextView
+                android:id="@+id/Text_InfoReceived"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="收到的数据"
+                />
+        </ScrollView>
+        <Button
+            android:id="@+id/Button_GetInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="获取信息" />
+    </LinearLayout>
 
 </FrameLayout>
