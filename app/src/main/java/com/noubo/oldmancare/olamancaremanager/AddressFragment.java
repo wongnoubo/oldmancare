@@ -91,6 +91,8 @@ public class AddressFragment extends Fragment {
                 receivedInfo = null;
                 receivedInfo = getInfo("location");
 
+                if (getActivity() == null)
+                    return;
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
