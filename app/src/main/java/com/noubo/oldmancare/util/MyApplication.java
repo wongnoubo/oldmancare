@@ -4,9 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-
-
-import com.mob.MobSDK;
 import com.noubo.oldmancare.R;
 
 import org.litepal.LitePal;
@@ -50,8 +47,6 @@ public class MyApplication extends Application{
         mContext = getApplicationContext();
         LayoutInflater inflate = LayoutInflater.from(mContext);
         //创建或者升级数据库
-        //短信接口 初始化MobSDK。
-        MobSDK.init(this);
         LitePal.initialize(this);
        /* View view = inflate.inflate(R.layout.medical_item,null);
 
