@@ -11,8 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.amap.api.maps2d.AMap;
 
 import android.util.Log;
+
+import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.MyLocationStyle;
 import com.noubo.oldmancare.R;
 
 import java.io.ByteArrayOutputStream;
@@ -69,16 +73,16 @@ public class AddressFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-        Log.d(TAG,"AddressFragment");
         return fragment;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final TextView Text_InfoReceived = (TextView) getActivity().findViewById(R.id.Text_InfoReceived);
-        Button Button_GetInfo = (Button) getActivity().findViewById(R.id.Button_GetInfo);
-        Text_InfoReceived.setText("");
+//        final TextView Text_InfoReceived = (TextView) getActivity().findViewById(R.id.Text_InfoReceived);
+//        Button Button_GetInfo = (Button) getActivity().findViewById(R.id.Button_GetInfo);
+//        Text_InfoReceived.setText("");
+
         //获取数据线程
         final Runnable getRunable = new Runnable() {
             @Override
@@ -90,37 +94,49 @@ public class AddressFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Text_InfoReceived.append(receivedInfo + "\n\n" );
+//                        Text_InfoReceived.append(receivedInfo + "\n\n" );
+                        Log.d(TAG,receivedInfo);
                         Log.d(TAG,"获取数据点击事件");
                     }
                 });
                 Looper.loop();
             }
         };
+        new Thread(getRunable).start();
 
         //获取数据
-        Button_GetInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                new Thread(getRunable).start();
-            }
-        });
+//        Button_GetInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                new Thread(getRunable).start();
+//            }
+//        });
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG,"onCreateView");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_address, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_address, container, false);
+        return view;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG,"onCreate");
+        MapView mapView = (MapView) getActivity().findViewById(R.id.map);
+        mapView.onCreate(savedInstanceState);// 此方法必须重写
+        AMap aMap = mapView.getMap();
+        //定位点
+        MyLocationStyle myLocationStyle;
+        myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
+        myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
+        //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
+        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -137,7 +153,6 @@ public class AddressFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d(TAG,"onAttach");
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -149,8 +164,25 @@ public class AddressFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG,"onDetach");
         mListener = null;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
     }
 
     /**

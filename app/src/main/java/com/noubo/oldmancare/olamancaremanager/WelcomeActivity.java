@@ -24,7 +24,6 @@ import okhttp3.Response;
 import com.noubo.oldmancare.R;
 import com.noubo.oldmancare.util.MyApplication;
 public class WelcomeActivity extends AppCompatActivity {
-
     private static final int TIMES_UP = 0;
     private Handler mHandler;
     private String FILE = "userNamePwd";

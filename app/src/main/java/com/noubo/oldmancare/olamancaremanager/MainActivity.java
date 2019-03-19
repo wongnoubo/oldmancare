@@ -23,7 +23,7 @@ import com.noubo.oldmancare.R;
 import android.widget.LinearLayout;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,AddressFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,AddressFragment.OnFragmentInteractionListener, MineFragment.OnFragmentInteractionListener,ShouyeFragment.OnFragmentInteractionListener,SportFragment.OnFragmentInteractionListener{
     private static final String TAG="MainActivity";
     private ViewPager viewPager;
     private LinearLayout mTabHomePage;
@@ -72,19 +72,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch(currentItem){
                     case 0:
                         btnHomePage.setImageResource(R.drawable.shouye_press);
+                        replaceFragment(new ShouyeFragment());
                         Log.d(TAG,"滑动主页");
                         break;
                     case 1:
                         btnAddress.setImageResource(R.drawable.faxian_press);
-                        replaceAddressFragment(new AddressFragment());
+                        replaceFragment(new AddressFragment());
                         Log.d(TAG,"滑动地址");
                         break;
                     case 2:
                         btnStepNumber.setImageResource(R.drawable.yundong_press);
+                        replaceFragment(new SportFragment());
                         Log.d(TAG,"滑动步数");
                         break;
                     case 3:
                         btnMine.setImageResource(R.drawable.wo_press);
+                        replaceFragment(new MineFragment());
                         Log.d(TAG,"滑动我的");
                         break;
                     default:
@@ -164,22 +167,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tab_step:
                 viewPager.setCurrentItem(2);
                 btnStepNumber.setImageResource(R.drawable.yundong_press);
+                replaceFragment(new SportFragment());
                 Log.d(TAG,"点击步数");
                 break;
             case R.id.tab_address:
                 viewPager.setCurrentItem(1);
                 btnAddress.setImageResource(R.drawable.faxian_press);
-                replaceAddressFragment(new AddressFragment());
+                replaceFragment(new AddressFragment());
                 Log.d(TAG,"点击地址");
                 break;
             case R.id.tab_mine:
                 viewPager.setCurrentItem(3);
                 btnMine.setImageResource(R.drawable.wo_press);
+                replaceFragment(new MineFragment());
                 Log.d(TAG,"点击我的");
                 break;
             case R.id.tab_homepage:
                 viewPager.setCurrentItem(0);
                 btnHomePage.setImageResource(R.drawable.shouye_press);
+                replaceFragment(new ShouyeFragment());
                 Log.d(TAG,"点击首页");
                 break;
             default:
@@ -187,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void replaceAddressFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.address_layout,fragment);
