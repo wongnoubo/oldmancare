@@ -55,6 +55,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'org.litepal.android:core:1.6.1'
     compile 'com.android.support:support-v4:25.3.1'
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.1.25'
 
     testCompile 'junit:junit:4.12'
 }

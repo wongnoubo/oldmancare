@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
 import com.amap.api.maps2d.AMap;
 
 import android.util.Log;
@@ -24,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import com.noubo.oldmancare.model.GPSModel;
+import com.noubo.oldmancare.model.Data;
+import com.noubo.oldmancare.model.CurrentValue;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +40,9 @@ import java.net.URL;
  */
 public class AddressFragment extends Fragment {
     private static final String TAG="AddressFragment";
+
+    double lat;
+    double lon;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,6 +106,11 @@ public class AddressFragment extends Fragment {
                     public void run() {
 //                        Text_InfoReceived.append(receivedInfo + "\n\n" );
                         Log.d(TAG,receivedInfo);
+                        GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
+                        lat = gpsModel.getData().getCurrent_value().getLat();
+                        lon = gpsModel.getData().getCurrent_value().getLon();
+                        Log.d("lat",Double.toString(lat));
+                        Log.d("lon",Double.toString(lon));
                         Log.d(TAG,"获取数据点击事件");
                     }
                 });
