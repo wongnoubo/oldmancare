@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;//谷歌官方推荐的HttpURLConnection
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.noubo.oldmancare.model.GPSModel;
@@ -51,6 +52,7 @@ import com.noubo.oldmancare.model.CurrentValue;
 public class AddressFragment extends Fragment{
     MapView mMapView = null;
     AMap aMap=null;
+    ArrayList<Marker> makerList = new ArrayList<>();
     private static final String TAG="AddressFragment";
 
     double lat;
@@ -283,6 +285,10 @@ public class AddressFragment extends Fragment{
                     @Override
                     public void run() {
                         Log.d(TAG,receivedInfo);
+                        if(!makerList.isEmpty()){
+                            makerList.get(0).destroy();
+                            makerList.remove(0);
+                        }
                         GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
                         lat = gpsModel.getData().getCurrent_value().getLat();
                         lon = gpsModel.getData().getCurrent_value().getLon();
@@ -290,7 +296,7 @@ public class AddressFragment extends Fragment{
                         Log.d("lon",Double.toString(lon));
                         LatLng latLng = new LatLng(lat,lon);
                         final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
-
+                        makerList.add(marker);
                     }
                 });
                 Looper.loop();
