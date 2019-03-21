@@ -6,11 +6,9 @@
     tools:context=".olamancaremanager.ShouyeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="shouye_fragment"
-        android:gravity="center"
-        android:textSize="40sp"/>
+        android:layout_height="match_parent"></WebView>
 
 </FrameLayout>

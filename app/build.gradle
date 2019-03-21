@@ -21,7 +21,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a', 'x86_64'
+            include 'x86', 'armeabi-v7a', 'x86_64',"armeabi","arm64-8a"
             universalApk true
         }
     }
@@ -56,7 +56,8 @@ dependencies {
     compile 'org.litepal.android:core:1.6.1'
     compile 'com.android.support:support-v4:25.3.1'
     // https://mvnrepository.com/artifact/com.alibaba/fastjson
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.1.25'
-
+    compile 'com.alibaba:fastjson:1.1.25'
+    //    compile 'com.amap.api:3dmap:latest.integration'
     testCompile 'junit:junit:4.12'
+    compile files('src/main/libs/Android_Map3D_SDK_V6.7.0_20190213.jar')
 }
