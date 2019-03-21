@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
@@ -141,41 +142,27 @@ public class AddressFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //获得地图
         mMapView = (MapView) getActivity().findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         if(aMap==null){
             aMap = mMapView.getMap();
         }
         //获取数据线程
-        final Runnable getRunable = new Runnable() {
+       final Handler handler=new Handler();
+
+        Runnable runnable=new Runnable() {
             @Override
             public void run() {
-                Looper.prepare();
-                receivedInfo = null;
-                receivedInfo = getInfo("location");
-
-                if (getActivity() == null)
-                    return;
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d(TAG,receivedInfo);
-                        GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
-                        lat = gpsModel.getData().getCurrent_value().getLat();
-                        lon = gpsModel.getData().getCurrent_value().getLon();
-                        Log.d("lat",Double.toString(lat));
-                        Log.d("lon",Double.toString(lon));
-                        LatLng latLng = new LatLng(lat,lon);
-                        final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
-
-                    }
-                });
-                Looper.loop();
+                Log.d(TAG,"定时5s获取最新的GPS坐标");
+                getGpsData();
+                handler.postDelayed(this, 5000);
             }
         };
-        new Thread(getRunable).start();
+        handler.postDelayed(runnable, 5000);//每5秒执行一次runnable.
 
-        //显示定位蓝点
+
+        //显示地图定位蓝点
         MyLocationStyle myLocationStyle;
         myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
@@ -279,5 +266,36 @@ public class AddressFragment extends Fragment{
         }
         return response;
 
+    }
+
+    //定时采集数据标点
+    public void getGpsData(){
+        final Runnable getRunable = new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                receivedInfo = null;
+                receivedInfo = getInfo("location");
+
+                if (getActivity() == null)
+                    return;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG,receivedInfo);
+                        GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
+                        lat = gpsModel.getData().getCurrent_value().getLat();
+                        lon = gpsModel.getData().getCurrent_value().getLon();
+                        Log.d("lat",Double.toString(lat));
+                        Log.d("lon",Double.toString(lon));
+                        LatLng latLng = new LatLng(lat,lon);
+                        final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
+
+                    }
+                });
+                Looper.loop();
+            }
+        };
+        new Thread(getRunable).start();
     }
 }
