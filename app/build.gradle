@@ -17,6 +17,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+     signingConfigs{
+            config{
+                storeFile file('F:/androidStudio/wongnoubo.jks')
+                storePassword '123456'
+                keyAlias 'wongnoubodev'
+                keyPassword '123456'
+            }
+            }
     splits {
         abi {
             enable true
@@ -35,6 +43,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfig
         }
     }
     compileOptions {
@@ -55,6 +64,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'org.litepal.android:core:1.6.1'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.inuker.bluetooth:library:1.4.0'//bluetooth
     // https://mvnrepository.com/artifact/com.alibaba/fastjson
     compile 'com.alibaba:fastjson:1.1.25'
     //    compile 'com.amap.api:3dmap:latest.integration'

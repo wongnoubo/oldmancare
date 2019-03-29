@@ -9,6 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.inuker.bluetooth.library.BluetoothClient;
+import com.inuker.bluetooth.library.beacon.Beacon;
+import com.inuker.bluetooth.library.search.SearchRequest;
+import com.inuker.bluetooth.library.search.SearchResult;
+import com.inuker.bluetooth.library.search.response.SearchResponse;
+import com.inuker.bluetooth.library.utils.BluetoothLog;
 import com.noubo.oldmancare.R;
 
 /**
@@ -22,6 +28,7 @@ import com.noubo.oldmancare.R;
 public class SportFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     public static final String TAG="SportFragment";
+//    BluetoothClient mClient = new BluetoothClient(getActivity());
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -114,4 +121,35 @@ public class SportFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+//    public void scanDevice(){
+//        SearchRequest request = new SearchRequest.Builder()
+//                .searchBluetoothLeDevice(3000, 3)   // 先扫BLE设备3次，每次3s
+//                .searchBluetoothClassicDevice(5000) // 再扫经典蓝牙5s
+//                .searchBluetoothLeDevice(2000)      // 再扫BLE设备2s
+//                .build();
+//
+//        mClient.search(request, new SearchResponse() {
+//            @Override
+//            public void onSearchStarted() {
+//
+//            }
+//
+//            @Override
+//            public void onDeviceFounded(SearchResult device) {
+//                Beacon beacon = new Beacon(device.scanRecord);
+//                BluetoothLog.v(String.format("beacon for %s\n%s", device.getAddress(), beacon.toString()));
+//            }
+//
+//            @Override
+//            public void onSearchStopped() {
+//
+//            }
+//
+//            @Override
+//            public void onSearchCanceled() {
+//
+//            }
+//        });
+//    }
 }

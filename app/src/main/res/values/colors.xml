@@ -15,4 +15,10 @@
     <color name="littleWhite">#fafafa</color>
     <color name="lightRed">#e78f8d</color>
     <color name="green">#FFA3E6B6</color>
+    <color name="c14">@android:color/white</color>
+    <color name="c4">#ff646464</color>
+    <color name="c12">#fff16149</color>
+    <color name="c24">#ffed4e60</color>
+    <color name="c20">#ff1fab11</color>
+    <color name="c15">#ff157efb</color>
 </resources>

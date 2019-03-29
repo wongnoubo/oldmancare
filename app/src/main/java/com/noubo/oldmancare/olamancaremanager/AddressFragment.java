@@ -276,7 +276,6 @@ public class AddressFragment extends Fragment{
                         lon = gpsModel.getData().getCurrent_value().getLon();
                         Log.d("huanglei",Double.toString(lat));
                         Log.d("huanglei",Double.toString(lon));
-                        CoordinateConverter coordinateConverter = new CoordinateConverter(context);
                         double[] gpsData = gps84_To_Gcj02(lat,lon);
                         LatLng latLng = new LatLng(gpsData[0],gpsData[1]);
                         Log.d("huanglei",Double.toString(gpsData[0]));

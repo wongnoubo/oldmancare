@@ -3,15 +3,141 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context=".olamancaremanager.SportFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.noubo.oldmancare.widget.ElasticScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="sport_fragment"
-        android:gravity="center"
-        android:textSize="40sp"/>
+        android:background="@color/c14"
+        android:keepScreenOn="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relat_scan"
+                android:layout_width="fill_parent"
+                android:layout_height="122dp"
+                android:layout_marginLeft="@dimen/padding_d1"
+                android:layout_marginRight="@dimen/padding_d1"
+                android:layout_marginTop="@dimen/padding_d1"
+                android:background="@drawable/activity_home_other">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_home_scan" />
+
+                <TextView
+                    android:id="@+id/tv_scanresult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/activity_home_scan"
+                    android:textColor="@color/c14"
+                    android:textSize="@dimen/text_s1" />
+            </RelativeLayout>
+
+            <View style="@style/GrayLineStyle_Hor" />
+
+            <RelativeLayout
+                android:id="@+id/relat_receive"
+                android:layout_width="fill_parent"
+                android:layout_height="122dp"
+                android:layout_marginLeft="@dimen/padding_d1"
+                android:layout_marginRight="@dimen/padding_d1"
+                android:layout_weight="1"
+                android:background="@drawable/activity_home_receive"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_home_receive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/activity_home_receive"
+                    android:textColor="@color/c14"
+                    android:textSize="@dimen/text_s1" />
+
+            </RelativeLayout>
+
+            <View style="@style/GrayLineStyle_Hor" />
+
+            <RelativeLayout
+                android:id="@+id/relat_curve"
+                android:layout_width="fill_parent"
+                android:layout_height="122dp"
+                android:layout_marginLeft="@dimen/padding_d1"
+                android:layout_marginRight="@dimen/padding_d1"
+                android:layout_weight="1"
+                android:background="@drawable/activity_home_curve"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_home_curve" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/activity_home_curve"
+                    android:textColor="@color/c14"
+                    android:textSize="@dimen/text_s1" />
+
+            </RelativeLayout>
+
+            <View style="@style/GrayLineStyle_Hor" />
+
+            <RelativeLayout
+                android:id="@+id/relat_set"
+                android:layout_width="fill_parent"
+                android:layout_height="122dp"
+                android:layout_marginLeft="@dimen/padding_d1"
+                android:layout_marginRight="@dimen/padding_d1"
+                android:layout_weight="2"
+                android:background="@drawable/activity_home_set"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_home_set" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/activity_home_set"
+                    android:textColor="@color/c14"
+                    android:textSize="@dimen/text_s1" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </com.noubo.oldmancare.widget.ElasticScrollView>
 
 </FrameLayout>
