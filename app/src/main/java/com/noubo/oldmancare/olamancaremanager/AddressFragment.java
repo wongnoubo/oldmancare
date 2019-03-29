@@ -41,6 +41,9 @@ import java.util.Date;
 import com.noubo.oldmancare.model.GPSModel;
 import com.noubo.oldmancare.model.Data;
 import com.noubo.oldmancare.model.CurrentValue;
+import com.amap.api.maps.CoordinateConverter;//偏移包
+
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -55,8 +58,14 @@ public class AddressFragment extends Fragment{
     ArrayList<Marker> makerList = new ArrayList<>();
     private static final String TAG="AddressFragment";
 
+    public static double pi = 3.1415926535897932384626;
+    public static double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+    public static double a = 6378245.0;
+    public static double ee = 0.00669342162296594323;
+
     double lat;
     double lon;
+    Context context;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -102,33 +111,6 @@ public class AddressFragment extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-//        //获取数据线程
-//        final Runnable getRunable = new Runnable() {
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                receivedInfo = null;
-//                receivedInfo = getInfo("location");
-//
-//                if (getActivity() == null)
-//                    return;
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Log.d(TAG,receivedInfo);
-//                        GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
-//                        lat = gpsModel.getData().getCurrent_value().getLat();
-//                        lon = gpsModel.getData().getCurrent_value().getLon();
-//                        Log.d("lat",Double.toString(lat));
-//                        Log.d("lon",Double.toString(lon));
-//                        Log.d(TAG,"获取数据点击事件");
-//                    }
-//                });
-//                Looper.loop();
-//            }
-//        };
-//        new Thread(getRunable).start();
     }
 
 
@@ -292,9 +274,13 @@ public class AddressFragment extends Fragment{
                         GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
                         lat = gpsModel.getData().getCurrent_value().getLat();
                         lon = gpsModel.getData().getCurrent_value().getLon();
-                        Log.d("lat",Double.toString(lat));
-                        Log.d("lon",Double.toString(lon));
-                        LatLng latLng = new LatLng(lat,lon);
+                        Log.d("huanglei",Double.toString(lat));
+                        Log.d("huanglei",Double.toString(lon));
+                        CoordinateConverter coordinateConverter = new CoordinateConverter(context);
+                        double[] gpsData = gps84_To_Gcj02(lat,lon);
+                        LatLng latLng = new LatLng(gpsData[0],gpsData[1]);
+                        Log.d("huanglei",Double.toString(gpsData[0]));
+                        Log.d("huanglei",Double.toString(gpsData[1]));
                         final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
                         makerList.add(marker);
                     }
@@ -303,5 +289,56 @@ public class AddressFragment extends Fragment{
             }
         };
         new Thread(getRunable).start();
+    }
+
+    /**
+     * 84 to 火星坐标系 (GCJ-02) World Geodetic System ==> Mars Geodetic System
+     *
+     * @param lat
+     * @param lon
+     * @return
+     */
+    public static double[] gps84_To_Gcj02(double lat, double lon) {
+        if (outOfChina(lat, lon)) {
+            return new double[]{lat,lon};
+        }
+        double dLat = transformLat(lon - 105.0, lat - 35.0);
+        double dLon = transformLon(lon - 105.0, lat - 35.0);
+        double radLat = lat / 180.0 * pi;
+        double magic = Math.sin(radLat);
+        magic = 1 - ee * magic * magic;
+        double sqrtMagic = Math.sqrt(magic);
+        dLat = (dLat * 180.0) / ((a * (1 - ee)) / (magic * sqrtMagic) * pi);
+        dLon = (dLon * 180.0) / (a / sqrtMagic * Math.cos(radLat) * pi);
+        double mgLat = lat + dLat;
+        double mgLon = lon + dLon;
+        return new double[]{mgLat, mgLon};
+    }
+
+    public static boolean outOfChina(double lat, double lon) {
+        if (lon < 72.004 || lon > 137.8347)
+            return true;
+        if (lat < 0.8293 || lat > 55.8271)
+            return true;
+        return false;
+    }
+
+    public static double transformLat(double x, double y) {
+        double ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y
+                + 0.2 * Math.sqrt(Math.abs(x));
+        ret += (20.0 * Math.sin(6.0 * x * pi) + 20.0 * Math.sin(2.0 * x * pi)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(y * pi) + 40.0 * Math.sin(y / 3.0 * pi)) * 2.0 / 3.0;
+        ret += (160.0 * Math.sin(y / 12.0 * pi) + 320 * Math.sin(y * pi / 30.0)) * 2.0 / 3.0;
+        return ret;
+    }
+
+    public static double transformLon(double x, double y) {
+        double ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1
+                * Math.sqrt(Math.abs(x));
+        ret += (20.0 * Math.sin(6.0 * x * pi) + 20.0 * Math.sin(2.0 * x * pi)) * 2.0 / 3.0;
+        ret += (20.0 * Math.sin(x * pi) + 40.0 * Math.sin(x / 3.0 * pi)) * 2.0 / 3.0;
+        ret += (150.0 * Math.sin(x / 12.0 * pi) + 300.0 * Math.sin(x / 30.0
+                * pi)) * 2.0 / 3.0;
+        return ret;
     }
 }
