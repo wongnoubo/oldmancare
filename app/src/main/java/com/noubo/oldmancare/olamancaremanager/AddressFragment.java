@@ -274,12 +274,12 @@ public class AddressFragment extends Fragment{
                         GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
                         lat = gpsModel.getData().getCurrent_value().getLat();
                         lon = gpsModel.getData().getCurrent_value().getLon();
-                        Log.d("huanglei",Double.toString(lat));
-                        Log.d("huanglei",Double.toString(lon));
+                        Log.d("lat",Double.toString(lat));
+                        Log.d("lon",Double.toString(lon));
                         double[] gpsData = gps84_To_Gcj02(lat,lon);
                         LatLng latLng = new LatLng(gpsData[0],gpsData[1]);
-                        Log.d("huanglei",Double.toString(gpsData[0]));
-                        Log.d("huanglei",Double.toString(gpsData[1]));
+                        Log.d("lat",Double.toString(gpsData[0]));
+                        Log.d("lon",Double.toString(gpsData[1]));
                         final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
                         makerList.add(marker);
                     }

@@ -11,5 +11,6 @@ public class CurveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_curve);
+        getSupportActionBar().hide();//隐藏标题栏
     }
 }
