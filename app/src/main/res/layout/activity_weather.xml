@@ -25,14 +25,14 @@
                 android:id="@+id/weather_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="none"
-                android:overScrollMode="never">
+                android:overScrollMode="never"
+                android:scrollbars="none">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true">
+                    android:fitsSystemWindows="true"
+                    android:orientation="vertical">
 
                     <include layout="@layout/title" />
 
@@ -55,8 +55,7 @@
             android:name="com.noubo.oldmancare.olamancaremanager.ChooseAreaFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            />
+            android:layout_gravity="start" />
 
     </android.support.v4.widget.DrawerLayout>
 

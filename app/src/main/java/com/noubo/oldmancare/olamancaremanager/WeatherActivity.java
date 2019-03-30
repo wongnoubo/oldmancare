@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ import okhttp3.Response;
 import com.noubo.oldmancare.R;
 
 public class WeatherActivity extends AppCompatActivity {
+    public static final String TAG = "WeatherActivity";
 
     public DrawerLayout drawerLayout;
 
@@ -67,6 +69,8 @@ public class WeatherActivity extends AppCompatActivity {
 
     private String mWeatherId;
 
+    private Button returnMainButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +99,7 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navButton = (Button) findViewById(R.id.nav_button);
+        returnMainButton = (Button) findViewById(R.id.returnmain_button);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
         if (weatherString != null) {
@@ -118,6 +123,16 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        returnMainButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent returnMainIntent = new Intent(WeatherActivity.this,MainActivity.class);
+                startActivity(returnMainIntent);
+                Log.d(TAG,"返回MainActivity");
+
             }
         });
         String bingPic = prefs.getString("bing_pic", null);
