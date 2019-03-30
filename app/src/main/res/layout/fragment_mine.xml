@@ -5,12 +5,9 @@
     android:layout_height="match_parent"
     tools:context="com.noubo.oldmancare.olamancaremanager.MineFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:text="mine_fragment"
-        android:textSize="40sp"/>
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
 
 </FrameLayout>

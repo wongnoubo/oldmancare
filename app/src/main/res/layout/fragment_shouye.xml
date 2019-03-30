@@ -1,14 +1,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".olamancaremanager.ShouyeFragment">
+    tools:context="com.noubo.oldmancare.olamancaremanager.ShouyeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <WebView
-        android:id="@+id/web_view"
+    <fragment
+        android:id="@+id/choose_area_fragment"
+        android:name="com.noubo.oldmancare.olamancaremanager.ChooseAreaFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_choose_area" />
 
 </FrameLayout>

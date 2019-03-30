@@ -28,7 +28,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".util.MyApplication"
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -71,7 +71,14 @@
         <activity android:name=".olamancaremanager.ReceiveActivity" />
         <activity android:name=".olamancaremanager.SearchActivity" />
         <activity android:name=".olamancaremanager.SetActivity" />
-        <activity android:name=".olamancaremanager.CurveActivity"></activity>
+        <activity android:name=".olamancaremanager.CurveActivity" />
+
+        <service
+            android:name=".service.AutoUpdateService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".olamancaremanager.WeatherActivity"></activity>
     </application>
 
 </manifest>
