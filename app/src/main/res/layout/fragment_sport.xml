@@ -24,7 +24,9 @@
                 android:layout_marginLeft="@dimen/padding_d1"
                 android:layout_marginRight="@dimen/padding_d1"
                 android:layout_marginTop="@dimen/padding_d1"
-                android:background="@drawable/activity_home_other">
+                android:background="@drawable/activity_home_other"
+                android:clickable="true"
+                android:onClick="onClickLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -55,7 +57,8 @@
                 android:layout_marginRight="@dimen/padding_d1"
                 android:layout_weight="1"
                 android:background="@drawable/activity_home_receive"
-                android:clickable="true">
+                android:clickable="true"
+                android:onClick="onClickLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -86,7 +89,8 @@
                 android:layout_marginRight="@dimen/padding_d1"
                 android:layout_weight="1"
                 android:background="@drawable/activity_home_curve"
-                android:clickable="true">
+                android:clickable="true"
+                android:onClick="onClickLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -107,8 +111,6 @@
 
             </RelativeLayout>
 
-            <View style="@style/GrayLineStyle_Hor" />
-
             <RelativeLayout
                 android:id="@+id/relat_set"
                 android:layout_width="fill_parent"
@@ -117,7 +119,8 @@
                 android:layout_marginRight="@dimen/padding_d1"
                 android:layout_weight="2"
                 android:background="@drawable/activity_home_set"
-                android:clickable="true">
+                android:clickable="true"
+                android:onClick="onClickLayout">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -137,6 +140,9 @@
                     android:textSize="@dimen/text_s1" />
 
             </RelativeLayout>
+
+            <View style="@style/GrayLineStyle_Hor" />
+
         </LinearLayout>
     </com.noubo.oldmancare.widget.ElasticScrollView>
 

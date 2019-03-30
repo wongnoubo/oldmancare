@@ -1,6 +1,7 @@
 package com.noubo.oldmancare.olamancaremanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.inuker.bluetooth.library.BluetoothClient;
 import com.inuker.bluetooth.library.beacon.Beacon;
@@ -32,6 +34,11 @@ public class SportFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private RelativeLayout searchLayout;
+    private RelativeLayout receiveLayout;
+    private RelativeLayout curveLayout;
+    private RelativeLayout settingLayout;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,6 +77,42 @@ public class SportFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        searchLayout = (RelativeLayout)getActivity().findViewById(R.id.relat_scan);
+        receiveLayout = (RelativeLayout)getActivity().findViewById(R.id.relat_receive);
+        curveLayout = (RelativeLayout)getActivity().findViewById(R.id.relat_curve);
+        settingLayout = (RelativeLayout)getActivity().findViewById(R.id.relat_set);
+        searchLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.d(TAG,"searchIntent");
+                Intent searchIntent = new Intent(getActivity(),SearchActivity.class);
+                startActivity(searchIntent);
+            }
+        });
+        receiveLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.d(TAG,"receiveIntent");
+                Intent receiveIntent = new Intent(getActivity(),ReceiveActivity.class);
+                startActivity(receiveIntent);
+            }
+        });
+        curveLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.d(TAG,"curveIntent");
+                Intent curveIntent = new Intent(getActivity(),CurveActivity.class);
+                startActivity(curveIntent);
+            }
+        });
+        settingLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.d(TAG,"setIntent");
+                Intent setIntent = new Intent(getActivity(),SetActivity.class);
+                startActivity(setIntent);
+            }
+        });
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -122,34 +165,23 @@ public class SportFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-//    public void scanDevice(){
-//        SearchRequest request = new SearchRequest.Builder()
-//                .searchBluetoothLeDevice(3000, 3)   // 先扫BLE设备3次，每次3s
-//                .searchBluetoothClassicDevice(5000) // 再扫经典蓝牙5s
-//                .searchBluetoothLeDevice(2000)      // 再扫BLE设备2s
-//                .build();
-//
-//        mClient.search(request, new SearchResponse() {
-//            @Override
-//            public void onSearchStarted() {
-//
-//            }
-//
-//            @Override
-//            public void onDeviceFounded(SearchResult device) {
-//                Beacon beacon = new Beacon(device.scanRecord);
-//                BluetoothLog.v(String.format("beacon for %s\n%s", device.getAddress(), beacon.toString()));
-//            }
-//
-//            @Override
-//            public void onSearchStopped() {
-//
-//            }
-//
-//            @Override
-//            public void onSearchCanceled() {
-//
-//            }
-//        });
-//    }
+    public void onClickLayout(View v) {
+            switch (v.getId()){
+                case R.id.relat_scan:
+                    Log.d(TAG,"扫描蓝牙");
+                    break;
+                case R.id.relat_receive:
+                    Log.d(TAG,"基本接受数据");
+                    break;
+                case R.id.relat_curve:
+                    Log.d(TAG,"数据波形");
+                    break;
+                case R.id.relat_set:
+                    Log.d(TAG,"设置");
+                    break;
+                default:
+                    break;
+            }
+    }
+
 }

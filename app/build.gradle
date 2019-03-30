@@ -17,19 +17,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-     signingConfigs{
-            config{
-                storeFile file('F:/androidStudio/wongnoubo.jks')
-                storePassword '123456'
-                keyAlias 'wongnoubodev'
-                keyPassword '123456'
-            }
-            }
+    signingConfigs {
+        config {
+            storeFile file('F:/androidStudio/wongnoubo.jks')
+            storePassword '123456'
+            keyAlias 'wongnoubodev'
+            keyPassword '123456'
+        }
+    }
     splits {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a', 'x86_64',"armeabi","arm64-8a"
+            include 'x86', 'armeabi-v7a', 'x86_64', "armeabi", "arm64-8a"
             universalApk true
         }
     }
@@ -57,6 +57,10 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //bluetooth
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    //    compile 'com.amap.api:3dmap:latest.integration'
+    compile files('src/main/libs/Android_Map3D_SDK_V6.7.0_20190213.jar')
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.android.support:design:25.3.1'
@@ -64,10 +68,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'org.litepal.android:core:1.6.1'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.inuker.bluetooth:library:1.4.0'//bluetooth
-    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile 'com.inuker.bluetooth:library:1.4.0'
     compile 'com.alibaba:fastjson:1.1.25'
-    //    compile 'com.amap.api:3dmap:latest.integration'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile files('src/main/libs/Android_Map3D_SDK_V6.7.0_20190213.jar')
 }

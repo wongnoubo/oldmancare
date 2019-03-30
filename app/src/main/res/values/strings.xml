@@ -16,6 +16,16 @@
     <string name="activity_home_receive">基本收发</string>
     <string name="activity_home_set">通信设置</string>
     <string name="activity_home_curve">数据波形</string>
+    <string name="activity_receive_state">连接状态</string>
+    <string name="activity_receive_tx">TX 0</string>
+    <string name="activity_receive_rx">RX 0</string>
+    <string name="activity_set">通信设置</string>
+    <string name="activity_set_bluetooth2">蓝牙2.0</string>
+    <string name="activity_set_bluetooth4">蓝牙4.0</string>
+    <string name="activity_set_usb">USB HID</string>
+    <string name="activity_set_udp">UDP</string>
+    <string name="activity_set_tcp">TCP</string>
+
     <string name="logout">安全退出</string>
     <string name="master_info">主人信息</string>
     <string name="unsupportbluetooth">设备不支持蓝牙</string>
