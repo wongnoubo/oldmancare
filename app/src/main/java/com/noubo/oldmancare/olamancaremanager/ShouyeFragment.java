@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.util.Log;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.noubo.oldmancare.R;
 

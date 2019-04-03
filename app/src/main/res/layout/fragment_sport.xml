@@ -110,7 +110,7 @@
                     android:textSize="@dimen/text_s1" />
 
             </RelativeLayout>
-
+            <View style="@style/GrayLineStyle_Hor" />
             <RelativeLayout
                 android:id="@+id/relat_set"
                 android:layout_width="fill_parent"

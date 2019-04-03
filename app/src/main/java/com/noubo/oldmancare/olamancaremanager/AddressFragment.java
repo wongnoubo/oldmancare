@@ -7,8 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import android.util.Log;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
@@ -27,6 +30,12 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.noubo.oldmancare.R;
 
 import java.io.ByteArrayOutputStream;
@@ -52,7 +61,7 @@ import com.amap.api.maps.CoordinateConverter;//偏移包
  * Use the {@link AddressFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddressFragment extends Fragment{
+public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocodeSearchListener {
     MapView mMapView = null;
     AMap aMap=null;
     ArrayList<Marker> makerList = new ArrayList<>();
@@ -65,7 +74,10 @@ public class AddressFragment extends Fragment{
 
     double lat;
     double lon;
-    Context context;
+    int key = 0;
+
+    GeocodeSearch geocoderSearch;
+    private String formatAddress;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -132,8 +144,17 @@ public class AddressFragment extends Fragment{
         if(aMap==null){
             aMap = mMapView.getMap();
         }
+
+        //显示地图定位蓝点
+        MyLocationStyle myLocationStyle;
+        myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
+        myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
+        //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
+        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+
         //获取数据线程
-       final Handler handler=new Handler();
+        final Handler handler=new Handler();
 
         Runnable runnable=new Runnable() {
             @Override
@@ -144,15 +165,6 @@ public class AddressFragment extends Fragment{
             }
         };
         handler.postDelayed(runnable, 5000);//每5秒执行一次runnable.
-
-
-        //显示地图定位蓝点
-        MyLocationStyle myLocationStyle;
-        myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
-        myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
-        aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-        //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
-        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -200,6 +212,19 @@ public class AddressFragment extends Fragment{
     public void onDestroy(){
         super.onDestroy();
         mMapView.onDestroy();
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
+        String formathuanress = result.getRegeocodeAddress().getFormatAddress();
+        Log.d(TAG,formathuanress);
+        Log.d(TAG,"huanglei");
+        Log.d(TAG,Integer.toString(rCode));
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult result, int rCode) {
+
     }
 
     /**
@@ -274,13 +299,17 @@ public class AddressFragment extends Fragment{
                         GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
                         lat = gpsModel.getData().getCurrent_value().getLat();
                         lon = gpsModel.getData().getCurrent_value().getLon();
+                        key = gpsModel.getData().getCurrent_value().getKey();
                         Log.d("lat",Double.toString(lat));
                         Log.d("lon",Double.toString(lon));
+                        Log.d("key",Integer.toString(key));
                         double[] gpsData = gps84_To_Gcj02(lat,lon);
                         LatLng latLng = new LatLng(gpsData[0],gpsData[1]);
                         Log.d("lat",Double.toString(gpsData[0]));
                         Log.d("lon",Double.toString(gpsData[1]));
-                        final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
+                        LatLonPoint latLonPoint = new LatLonPoint(gpsData[0],gpsData[1]);
+                        setOnLocationDetails(latLonPoint);//逆地址解析
+                        final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("老人实时位置").snippet(formatAddress));
                         makerList.add(marker);
                     }
                 });
@@ -339,5 +368,12 @@ public class AddressFragment extends Fragment{
         ret += (150.0 * Math.sin(x / 12.0 * pi) + 300.0 * Math.sin(x / 30.0
                 * pi)) * 2.0 / 3.0;
         return ret;
+    }
+
+    public void setOnLocationDetails(LatLonPoint latLonPoint){
+        geocoderSearch = new GeocodeSearch(getActivity().getApplicationContext());
+        geocoderSearch.setOnGeocodeSearchListener(this);
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 25, GeocodeSearch.AMAP);
+        geocoderSearch.getFromLocationAsyn(query);
     }
 }
