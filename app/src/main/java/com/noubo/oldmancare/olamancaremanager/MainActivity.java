@@ -167,25 +167,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tab_step:
                 viewPager.setCurrentItem(2);
                 btnStepNumber.setImageResource(R.drawable.yundong_press);
-                replaceFragment(new SportFragment());
+//                replaceFragment(new SportFragment());
                 Log.d(TAG,"点击步数");
                 break;
             case R.id.tab_address:
                 viewPager.setCurrentItem(1);
                 btnAddress.setImageResource(R.drawable.faxian_press);
-                replaceFragment(new AddressFragment());
+//                replaceFragment(new AddressFragment());
                 Log.d(TAG,"点击地址");
                 break;
             case R.id.tab_mine:
                 viewPager.setCurrentItem(3);
                 btnMine.setImageResource(R.drawable.wo_press);
-                replaceFragment(new MineFragment());
+//                replaceFragment(new MineFragment());
                 Log.d(TAG,"点击我的");
                 break;
             case R.id.tab_homepage:
                 viewPager.setCurrentItem(0);
                 btnHomePage.setImageResource(R.drawable.shouye_press);
-                replaceFragment(new ShouyeFragment());
+//                replaceFragment(new ShouyeFragment());
                 Log.d(TAG,"点击首页");
                 break;
             default:
