@@ -5,37 +5,6 @@
     android:gravity="center"
     >
     <LinearLayout
-        android:id="@+id/tab_homepage"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
-        <ImageButton
-            android:id="@+id/tab_homepage_img"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_centerHorizontal="true"
-            android:background="#ffffff"
-            android:focusable="false"
-            android:scaleType="centerInside"
-            android:src="@drawable/tab_homepage"
-            />
-        <TextView
-            android:id="@+id/tab_homapage_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tab_homepage_img"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
-            android:gravity="center_vertical"
-            android:text="@string/tab_homepage"
-            android:textColor="#9A9A9A"
-            android:textSize="12sp"
-            />
-    </LinearLayout>
-    <LinearLayout
         android:id="@+id/tab_address"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -63,37 +32,6 @@
             android:textSize="12sp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/tab_step"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
-        <ImageButton
-            android:id="@+id/tab_step_img"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_centerHorizontal="true"
-            android:background="#ffffff"
-            android:focusable="false"
-            android:scaleType="centerInside"
-            android:src="@drawable/tab_sport"
-            />
-        <TextView
-            android:id="@+id/tab_step_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tab_step_img"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
-            android:gravity="center_vertical"
-            android:text="@string/tab_sport"
-            android:textColor="#9A9A9A"
-            android:textSize="12sp"
-            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/tab_mine"
@@ -128,18 +66,6 @@
     </LinearLayout>
     <FrameLayout
         android:id="@+id/address_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0">
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/home_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="0">
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/sport_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="0">
