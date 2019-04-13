@@ -27,6 +27,12 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.noubo.oldmancare.R;
 
 import java.io.ByteArrayOutputStream;
@@ -52,7 +58,7 @@ import com.amap.api.maps.CoordinateConverter;//偏移包
  * Use the {@link AddressFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddressFragment extends Fragment{
+public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocodeSearchListener {
     MapView mMapView = null;
     AMap aMap=null;
     ArrayList<Marker> makerList = new ArrayList<>();
@@ -78,6 +84,8 @@ public class AddressFragment extends Fragment{
 
     //c从Onenet接收到的信息
     private String receivedInfo;
+    private String addressName;
+    private GeocodeSearch geocoderSearch;
     
 
     // TODO: Rename and change types of parameters
@@ -132,6 +140,8 @@ public class AddressFragment extends Fragment{
         if(aMap==null){
             aMap = mMapView.getMap();
         }
+        init();
+
         //获取数据线程
        final Handler handler=new Handler();
 
@@ -166,6 +176,20 @@ public class AddressFragment extends Fragment{
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    private void init(){
+        geocoderSearch = new GeocodeSearch(getActivity());
+        geocoderSearch.setOnGeocodeSearchListener(this);
+    }
+
+    /**
+     * 响应逆地理编码
+     */
+    public void getAddress(final LatLonPoint latLonPoint) {
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,
+                GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+        geocoderSearch.getFromLocationAsyn(query);// 设置异步逆地理编码请求
     }
 
     @Override
@@ -274,13 +298,15 @@ public class AddressFragment extends Fragment{
                         GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
                         lat = gpsModel.getData().getCurrent_value().getLat();
                         lon = gpsModel.getData().getCurrent_value().getLon();
-                        Log.d("huanglei",Double.toString(lat));
-                        Log.d("huanglei",Double.toString(lon));
+                        Log.d(TAG,Double.toString(lat));
+                        Log.d(TAG,Double.toString(lon));
                         CoordinateConverter coordinateConverter = new CoordinateConverter(context);
                         double[] gpsData = gps84_To_Gcj02(lat,lon);
                         LatLng latLng = new LatLng(gpsData[0],gpsData[1]);
-                        Log.d("huanglei",Double.toString(gpsData[0]));
-                        Log.d("huanglei",Double.toString(gpsData[1]));
+                        LatLonPoint latLonPoint = new LatLonPoint(gpsData[0],gpsData[1]);
+                        Log.d(TAG,Double.toString(gpsData[0]));
+                        Log.d(TAG,Double.toString(gpsData[1]));
+                        getAddress(latLonPoint);
                         final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
                         makerList.add(marker);
                     }
@@ -340,5 +366,26 @@ public class AddressFragment extends Fragment{
         ret += (150.0 * Math.sin(x / 12.0 * pi) + 300.0 * Math.sin(x / 30.0
                 * pi)) * 2.0 / 3.0;
         return ret;
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult result, int rCode) {
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
+        if (rCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.getRegeocodeAddress() != null
+                    && result.getRegeocodeAddress().getFormatAddress() != null) {
+                addressName = result.getRegeocodeAddress().getFormatAddress()
+                        + "附近";
+                Log.d(TAG,addressName);
+            }else {
+                Log.d(TAG,"else1");
+            }
+        }else {
+            Log.d(TAG,Integer.toString(rCode));
+            Log.d(TAG,"else2");
+        }
     }
 }

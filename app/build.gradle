@@ -60,4 +60,5 @@ dependencies {
     //    compile 'com.amap.api:3dmap:latest.integration'
     testCompile 'junit:junit:4.12'
     compile files('src/main/libs/Android_Map3D_SDK_V6.7.0_20190213.jar')
+    compile files('src/main/libs/AMap_Search_V6.5.0_20180930.jar')
 }
