@@ -34,7 +34,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="10"/>
+                android:layout_weight="10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"/>
+                    android:layout_weight="1.5" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                     android:text="@string/user_login"
                     android:textColor="@color/fontGray"
                     android:textSize="30sp"
-                    android:typeface="sans"/>
+                    android:typeface="sans" />
 
                 <TextView
                     android:id="@+id/login_error_text"
@@ -69,7 +69,7 @@
                     android:layout_gravity="start"
                     android:text="@string/temp"
                     android:textColor="@android:color/holo_red_light"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/user_name"
@@ -86,7 +86,7 @@
                     android:padding="10dp"
                     android:textColor="@color/fontGray"
                     android:textColorHint="@color/lightGray"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/password_error_text"
@@ -95,7 +95,7 @@
                     android:layout_gravity="start"
                     android:text="@string/empty_password"
                     android:textColor="@android:color/holo_red_light"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/password"
@@ -116,7 +116,7 @@
                     android:paddingStart="10dp"
                     android:textColor="@color/fontGray"
                     android:textColorHint="@color/lightGray"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                     android:gravity="center"
                     android:text="@string/login"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                         android:text="@string/register"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
-                        android:typeface="sans"/>
+                        android:typeface="sans" />
 
                     <TextView
                         android:id="@+id/forget_password"
@@ -174,7 +174,7 @@
                         android:text="@string/forget_password"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
-                        android:typeface="sans"/>
+                        android:typeface="sans" />
 
                 </RelativeLayout>
 
@@ -203,7 +203,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/user_logo"/>
+                    android:src="@drawable/user_logo" />
 
             </com.noubo.oldmancare.widget.SquareLinearLayout>
 
