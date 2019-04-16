@@ -1,16 +1,53 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.noubo.oldmancare.olamancaremanager.MineFragment">
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:background="#8000">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:text="mine_fragment"
-        android:textSize="40sp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:text="设备信息"
+        android:textColor="#fff"
+        android:textSize="30sp"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/device_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="设备ID:518991790"
+        android:textSize="20sp"
+        android:textColor="#fff" />
+
+    <TextView
+        android:id="@+id/device_id_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="创建时间：2019-03-11 22:06:07"
+        android:textSize="20sp"
+        android:textColor="#fff" />
+
+    <TextView
+    android:id="@+id/device_time_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:text="设备编号：111"
+    android:textSize="20sp"
+    android:textColor="#fff" />
+    <TextView
+    android:id="@+id/device_number_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:text="接入方式：HTTP"
+    android:textSize="20sp"
+    android:textColor="#fff" />
+</LinearLayout>
