@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.noubo.oldmancare.model.GPSModel;
 import com.noubo.oldmancare.model.Data;
@@ -71,6 +73,7 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
 
     double lat;
     double lon;
+    int key;
     Context context;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -135,6 +138,9 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //获得地图
+        Log.d(TAG,"HU");
+        sendMessage("13676054718","晚上吃啥？");
+        Log.d(TAG,"HU1");
         mMapView = (MapView) getActivity().findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);// 此方法必须重写
         if(aMap==null){
@@ -298,16 +304,21 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
                         GPSModel gpsModel = JSON.parseObject(receivedInfo,GPSModel.class);
                         lat = gpsModel.getData().getCurrent_value().getLat();
                         lon = gpsModel.getData().getCurrent_value().getLon();
+                        key =gpsModel.getData().getCurrent_value().getKey();
                         Log.d(TAG,Double.toString(lat));
                         Log.d(TAG,Double.toString(lon));
-                        CoordinateConverter coordinateConverter = new CoordinateConverter(context);
+                        Log.d(TAG,Integer.toString(key));
                         double[] gpsData = gps84_To_Gcj02(lat,lon);
                         LatLng latLng = new LatLng(gpsData[0],gpsData[1]);
                         LatLonPoint latLonPoint = new LatLonPoint(gpsData[0],gpsData[1]);
                         Log.d(TAG,Double.toString(gpsData[0]));
                         Log.d(TAG,Double.toString(gpsData[1]));
                         getAddress(latLonPoint);
-                        final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet("老人实时位置"));
+                        final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet(addressName));
+                        if(key==1){
+                            sendMessage("13676054718",addressName);
+                            Log.d(TAG,"发送短信");
+                        }
                         makerList.add(marker);
                     }
                 });
@@ -367,6 +378,19 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
                 * pi)) * 2.0 / 3.0;
         return ret;
     }
+
+    /**
+     * 发短信
+     * @param tel
+     * @param message
+     */
+   public void sendMessage(String tel,String message){
+       SmsManager sm = SmsManager.getDefault();
+       List<String> sms = sm.divideMessage(message);
+       for (String smsList:sms){
+           sm.sendTextMessage(tel,null,smsList,null,null);
+       }
+   }
 
     @Override
     public void onGeocodeSearched(GeocodeResult result, int rCode) {

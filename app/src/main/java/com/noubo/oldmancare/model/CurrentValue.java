@@ -8,6 +8,8 @@ public class CurrentValue {
     private double lat;
     private double lon;
 
+    private int key;
+
     public double getLat() {
         return lat;
     }
@@ -24,8 +26,16 @@ public class CurrentValue {
         this.lon = lon;
     }
 
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
     @Override
     public String toString(){
-        return " lat: "+lat+" lon: "+lon;
+        return " lat: "+lat+" lon: "+lon+" key"+key;
     }
 }
