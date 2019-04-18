@@ -74,7 +74,7 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
     double lat;
     double lon;
     int key;
-    Date createTime;
+    Date updateTime;
     ArrayList<Date> timeList = new ArrayList<>();
     Context context;
 
@@ -304,11 +304,11 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
                         lat = gpsModel.getData().getCurrent_value().getLat();
                         lon = gpsModel.getData().getCurrent_value().getLon();
                         key = gpsModel.getData().getCurrent_value().getKey();
-                        createTime = gpsModel.getData().getCreate_time();
+                        updateTime = gpsModel.getData().getCreate_time();
                         Log.d(TAG,Double.toString(lat));
                         Log.d(TAG,Double.toString(lon));
                         Log.d(TAG,Integer.toString(key));
-                        Log.d(TAG, String.valueOf(createTime));
+                        Log.d(TAG, String.valueOf(updateTime));
                         double[] gpsData = gps84_To_Gcj02(lat,lon);
                         LatLng latLng = new LatLng(gpsData[0],gpsData[1]);
                         LatLonPoint latLonPoint = new LatLonPoint(gpsData[0],gpsData[1]);
@@ -316,7 +316,7 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
                         Log.d(TAG,Double.toString(gpsData[1]));
                         getAddress(latLonPoint);
                         final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("珠海").snippet(addressName));
-                        if(key==1 && isNewCreateTime(createTime)){
+                        if(key==1 && isNewCreateTime(updateTime)){
                             sendMessage("13676054718",addressName);
                             Log.d(TAG,"发送短信");
                         }
@@ -393,22 +393,22 @@ public class AddressFragment extends Fragment implements GeocodeSearch.OnGeocode
        }
    }
 
-   public boolean isNewCreateTime(Date createTime){
+   public boolean isNewCreateTime(Date updateTime){
        boolean isNewTime;
        if(timeList.isEmpty()){
-           timeList.add(createTime);
+           timeList.add(updateTime);
            isNewTime = true;
            Log.d(TAG,"新时间");
            return isNewTime;
        }
        else {
-           if (String.valueOf(timeList.get(0)).equals(String.valueOf(createTime))) {
+           if (String.valueOf(timeList.get(0)).equals(String.valueOf(updateTime))) {
                Log.d(TAG, "旧时间");
                isNewTime = false;
                return isNewTime;
            } else {
                timeList.remove(0);
-               timeList.add(createTime);
+               timeList.add(updateTime);
                Log.d(TAG, "新时间");
                isNewTime = true;
                return isNewTime;
